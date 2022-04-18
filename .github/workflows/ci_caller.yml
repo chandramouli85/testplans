@@ -1,0 +1,68 @@
+name: CI_CD_WORKFLOW  
+
+on:
+  workflow_dispatch:
+  push:
+    branches: 
+      - branch**
+      - testplans
+
+  pull_request:
+    branches:
+     - testplans
+
+jobs:
+  build:
+    runs-on: [self-hosted, linux, X64, research]
+    steps:
+    
+      
+      - name: Step 2 - Checkout Repository from GitHub      
+        uses: actions/checkout@v2
+
+      - name: Step 3 - Gradle wrapper version validation
+        uses: gradle/wrapper-validation-action@v1
+      
+      - name: Step 4 - Use Java version 8
+        uses: actions/setup-java@v2
+        with:
+          java-version: ${{ secrets.java_version }}
+          distribution: 'adopt'
+          cache: gradle
+                
+      - name: Step 5 - Granting permissions to gradlew file
+        run: chmod +x ./gradlew
+      - name: test
+        run: test -DincludeTags=qa
+        
+        
+        
+      - name: Azure Pipelines Action
+        uses: Azure/pipelines@v1
+        with:
+            azure-devops-project-url: https://dev.azure.com/organization/project-name
+            azure-pipeline-name: 'My Pipeline'
+            azure-devops-token: ${{ secrets.AZURE_DEVOPS_TOKEN }}
+        
+        
+      #- name: Download and Extract Artifacts
+       # env:
+        #  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        #run: |
+         # mkdir -p artifacts && cd artifacts
+          #artifacts_url=${{ github.event.workflow_run.artifacts_url }}
+          #gh api "$artifacts_url" -q '.artifacts[] | [.name, .archive_download_url] | @tsv' | while read artifact
+          #do
+           # IFS=$'\t' read name url <<< "$artifact"
+            #gh api $url > "$name.zip"
+            unzip -d "$name" "$name.zip"
+          #done
+
+        
+     # - name: Publish Unit Test Results
+      #  uses: philips-internal/ampm-cicd-reference-application@testplans
+       # with:
+        #     path: "artifacts/**/*.xml"
+                
+        
+          
