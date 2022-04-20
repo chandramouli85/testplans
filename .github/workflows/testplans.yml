@@ -18,7 +18,7 @@ jobs:
           uses: Azure/pipelines@v1
           with:
             azure-devops-project-url: https://dev.azure.com/rajutestproject/sampletestazure
-            azure-pipeline-name: 'azure-pipelines.yml'
+            azure-pipeline-name: 'testplans.git'
             azure-devops-token: ${{ secrets.testplans }} 
           # - run : |
           #       curl  https://dev.azure.com/rajutestproject/sampletestazure
