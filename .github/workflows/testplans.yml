@@ -14,9 +14,12 @@ jobs:
         name: Call Azure Pipeline
         runs-on: ubuntu-latest
         steps:
-        - name: Azure Pipelines Action
-          uses: Azure/pipelines@v1
-          with:
-            azure-devops-project-url: https://dev.azure.com/rajutestproject/sampletestazure
-            azure-pipeline-name: 'testplans.git'
-            azure-devops-token: ${{ secrets.AZURE_DEVOPS_TOKEN }} 
+       # - name: Azure Pipelines Action
+        #  uses: Azure/pipelines@v1
+         # with:
+          #  azure-devops-project-url: https://dev.azure.com/rajutestproject/sampletestazure
+           # azure-pipeline-name: 'testplans.git'
+            #azure-devops-token: ${{ secrets.AZURE_DEVOPS_TOKEN }} 
+          -run : |
+                 curl  https://dev.azure.com/rajutestproject/sampletestazure
+          
